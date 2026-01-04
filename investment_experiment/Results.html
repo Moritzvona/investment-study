@@ -1,0 +1,38 @@
+{{ block title }}{{ endblock }}
+{{ block content }}
+<style>
+body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh}
+.container{max-width:700px;margin:0 auto;padding:20px}
+.thank-you-card{background:white;border-radius:20px;padding:40px;text-align:center}
+.success-icon{font-size:64px;margin-bottom:20px}
+.thank-you-title{font-size:32px;font-weight:700;color:#1a1a2e;margin-bottom:10px}
+.final-summary{background:linear-gradient(135deg,#1a1a2e,#2d2d44);border-radius:15px;padding:25px;color:white;margin:25px 0}
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;text-align:center}
+.summary-value{font-size:24px;font-weight:700;margin-top:5px}
+.summary-value.gain{color:#10b981}
+.summary-value.loss{color:#ef4444}
+.research-info{background:#f8f9fa;border-radius:15px;padding:25px;text-align:left;margin:25px 0}
+.university-badge{display:inline-block;background:#f0f0f0;padding:12px 20px;border-radius:30px;margin-top:20px}
+</style>
+<div class="container">
+<div class="thank-you-card">
+<div class="success-icon">🎉</div>
+<h1 class="thank-you-title">Thank You!</h1>
+<p style="color:#666">Your responses have been recorded.</p>
+<div class="final-summary">
+<div style="opacity:0.8;margin-bottom:15px">Your Results</div>
+<div class="summary-grid">
+<div><div style="font-size:12px;opacity:0.7">Started</div><div class="summary-value">€{{ initial }}</div></div>
+<div><div style="font-size:12px;opacity:0.7">After R1</div><div class="summary-value {{ if r1_gain }}gain{{ else }}loss{{ endif }}">€{{ r1_outcome }}</div></div>
+<div><div style="font-size:12px;opacity:0.7">Final</div><div class="summary-value {{ if total_return >= 0 }}gain{{ else }}loss{{ endif }}">€{{ final_outcome }}</div></div>
+</div>
+</div>
+<div class="research-info">
+<div style="font-weight:600;margin-bottom:10px">📚 About This Research</div>
+<p style="font-size:14px;color:#555">This study examines how prior investment outcomes influence risk-taking behavior. Your participation helps advance behavioral finance research.</p>
+</div>
+<div class="university-badge">🎓 Maastricht University</div>
+<p style="margin-top:25px;color:#888;font-size:14px">You may now close this window.</p>
+</div>
+</div>
+{{ endblock }}
