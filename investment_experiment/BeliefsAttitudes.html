@@ -1,0 +1,56 @@
+{{ block title }}{{ endblock }}
+{{ block content }}
+<style>
+body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh}
+.container{max-width:700px;margin:0 auto;padding:20px}
+.page-title{text-align:center;color:white;font-size:28px;font-weight:700;margin-bottom:25px}
+.portfolio-status{background:white;border-radius:15px;padding:20px;text-align:center;margin-bottom:25px}
+.status-value{font-size:36px;font-weight:700}
+.status-value.gain{color:#10b981}
+.status-value.loss{color:#ef4444}
+.question-card{background:white;border-radius:15px;padding:25px;margin-bottom:20px}
+.question-number{display:inline-block;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;width:30px;height:30px;border-radius:50%;text-align:center;line-height:30px;font-weight:600;margin-bottom:15px}
+.question-title{font-size:18px;font-weight:600;color:#1a1a2e;margin-bottom:15px}
+input[type="number"]{width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:10px;font-size:16px;box-sizing:border-box}
+.radio-group{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.radio-option input[type="radio"]{display:none}
+.radio-option label{display:block;padding:12px 15px;background:#f5f5f5;border-radius:10px;cursor:pointer}
+.radio-option input[type="radio"]:checked+label{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white}
+.scale-labels{display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:#888}
+.submit-btn{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;padding:15px 50px;font-size:18px;border-radius:30px;cursor:pointer;display:block;margin:20px auto}
+</style>
+<div class="container">
+<h1 class="page-title">Your Investment Perspective</h1>
+<div class="portfolio-status">
+<div>Current Portfolio</div>
+<div class="status-value {{ if is_gain }}gain{{ else }}loss{{ endif }}">€{{ current_portfolio }}</div>
+</div>
+<form method="post">
+<div class="question-card">
+<div class="question-number">1</div>
+<div class="question-title">What is the minimum price you would accept to sell your portfolio?</div>
+<input type="number" name="wta_sell" step="0.01" min="0" max="500" required placeholder="€">
+</div>
+<div class="question-card">
+<div class="question-number">2</div>
+<div class="question-title">What do you think is the probability (%) that Tech Fund will go UP next round?</div>
+<input type="number" name="belief_stock_prob" min="0" max="100" required placeholder="0-100%">
+</div>
+<div class="question-card">
+<div class="question-number">3</div>
+<div class="question-title">Was your Round 1 result due to luck or skill?</div>
+<div class="radio-group">
+<div class="radio-option"><input type="radio" name="luck_vs_skill" id="l1" value="1" required><label for="l1">1</label></div>
+<div class="radio-option"><input type="radio" name="luck_vs_skill" id="l2" value="2"><label for="l2">2</label></div>
+<div class="radio-option"><input type="radio" name="luck_vs_skill" id="l3" value="3"><label for="l3">3</label></div>
+<div class="radio-option"><input type="radio" name="luck_vs_skill" id="l4" value="4"><label for="l4">4</label></div>
+<div class="radio-option"><input type="radio" name="luck_vs_skill" id="l5" value="5"><label for="l5">5</label></div>
+<div class="radio-option"><input type="radio" name="luck_vs_skill" id="l6" value="6"><label for="l6">6</label></div>
+<div class="radio-option"><input type="radio" name="luck_vs_skill" id="l7" value="7"><label for="l7">7</label></div>
+</div>
+<div class="scale-labels"><span>Entirely luck</span><span>Entirely skill</span></div>
+</div>
+<button type="submit" class="submit-btn">Continue →</button>
+</form>
+</div>
+{{ endblock }}
