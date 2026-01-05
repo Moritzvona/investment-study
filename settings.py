@@ -15,6 +15,13 @@ SESSION_CONFIG_DEFAULTS = dict(
     doc=""
 )
 
+ROOMS = [
+    dict(
+        name='study',
+        display_name='Investment Study',
+    ),
+]
+
 PARTICIPANT_FIELDS = []
 SESSION_FIELDS = []
 
@@ -29,3 +36,11 @@ DEMO_PAGE_INTRO_HTML = ""
 SECRET_KEY = '1234567890'
 
 INSTALLED_APPS = ['otree']
+```
+
+5. Klicke **"Commit changes"**
+6. Gehe zu Heroku → Deploy → **"Deploy Branch"**
+
+Danach hast du einen permanenten Link:
+```
+https://investment-study-2026-819f047bed07.herokuapp.com/room/study
