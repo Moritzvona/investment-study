@@ -1,32 +1,39 @@
 {{ block title }}{{ endblock }}
 {{ block content }}
 <style>
-body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh}
-.container{max-width:800px;margin:0 auto;padding:20px}
-.result-card{background:white;border-radius:20px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,0.3);margin-bottom:20px}
-.outcome-header{text-align:center;padding:20px;border-radius:15px;margin-bottom:25px;color:white}
+body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;margin:0;padding:0}
+.container{max-width:800px;margin:0 auto;padding:15px;box-sizing:border-box}
+.result-card{background:white;border-radius:20px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,0.3);margin-bottom:20px}
+.outcome-header{text-align:center;padding:15px;border-radius:15px;margin-bottom:20px;color:white}
 .outcome-header.gain{background:linear-gradient(135deg,#10b981 0%,#059669 100%)}
 .outcome-header.loss{background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%)}
-.outcome-icon{font-size:48px;margin-bottom:10px}
-.outcome-text{font-size:24px;font-weight:700}
-.breakdown-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #f0f0f0}
-.portfolio-result{text-align:center;padding:25px;border-radius:15px;margin-top:20px}
+.outcome-icon{font-size:36px;margin-bottom:5px}
+.outcome-text{font-size:18px;font-weight:700}
+.breakdown{background:#f8f9fa;border-radius:10px;padding:15px;margin-bottom:15px}
+.breakdown-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee;font-size:14px}
+.breakdown-row:last-child{border-bottom:none}
+.portfolio-result{text-align:center;padding:20px;border-radius:15px;margin-top:15px}
 .portfolio-result.gain{background:rgba(16,185,129,0.1);border:2px solid #10b981}
 .portfolio-result.loss{background:rgba(239,68,68,0.1);border:2px solid #ef4444}
-.portfolio-value{font-size:42px;font-weight:700}
+.portfolio-label{font-size:14px;color:#666;margin-bottom:5px}
+.portfolio-value{font-size:36px;font-weight:700}
 .portfolio-value.gain{color:#10b981}
 .portfolio-value.loss{color:#ef4444}
+.portfolio-change{font-size:14px;margin-top:5px}
+.btn-next{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;padding:15px 40px;font-size:16px;border-radius:30px;cursor:pointer;display:block;margin:20px auto;width:100%;max-width:300px}
 </style>
 <div class="container">
 <div class="result-card">
 {{ if is_gain }}<div class="outcome-header gain"><div class="outcome-icon">📈</div><div class="outcome-text">Tech Fund Surged! {{ return_percent }}</div></div>
 {{ else }}<div class="outcome-header loss"><div class="outcome-icon">📉</div><div class="outcome-text">Tech Fund Declined {{ return_percent }}</div></div>{{ endif }}
+<div class="breakdown">
 <div class="breakdown-row"><span>🛡️ Bonds: €{{ safe_amount }}</span><span>→ €{{ safe_return }}</span></div>
 <div class="breakdown-row"><span>🚀 Tech: €{{ risky_amount }}</span><span>→ €{{ risky_return }}</span></div>
+</div>
 <div class="portfolio-result {{ if is_gain }}gain{{ else }}loss{{ endif }}">
-<div>Your Portfolio</div>
+<div class="portfolio-label">Your Portfolio</div>
 <div class="portfolio-value {{ if is_gain }}gain{{ else }}loss{{ endif }}">€{{ outcome }}</div>
-<div>{{ if is_gain }}+{{ endif }}{{ performance_percent }}% return</div>
+<div class="portfolio-change">{{ if is_gain }}+{{ endif }}{{ performance_percent }}% return</div>
 </div>
 </div>
 {{ next_button }}
