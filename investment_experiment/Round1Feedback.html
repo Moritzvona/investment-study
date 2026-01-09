@@ -9,13 +9,14 @@ body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh
 .outcome-header.loss{background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%)}
 .outcome-icon{font-size:36px;margin-bottom:5px}
 .outcome-text{font-size:18px;font-weight:700}
-.micron-badge{display:inline-block;background:#0057b8;color:white;padding:4px 12px;border-radius:4px;font-weight:600;font-size:14px;margin-bottom:8px}
+.asset-tag{display:inline-block;background:rgba(255,255,255,0.2);padding:4px 12px;border-radius:4px;font-weight:600;font-size:14px;margin-bottom:8px}
 .breakdown{background:#f8f9fa;border-radius:10px;padding:15px;margin-bottom:15px}
 .breakdown-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee;font-size:14px}
 .breakdown-row:last-child{border-bottom:none}
 .breakdown-label{display:flex;align-items:center;gap:8px}
-.mini-treasury{width:20px;height:20px;background:linear-gradient(135deg,#1a237e,#0d47a1);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#c9a227;font-size:8px;font-weight:bold}
-.mini-micron{background:#0057b8;color:white;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:600}
+.mini-badge{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;color:white}
+.mini-badge.safe{background:#1565c0}
+.mini-badge.risky{background:#ff9800}
 .portfolio-result{text-align:center;padding:20px;border-radius:15px;margin-top:15px}
 .portfolio-result.gain{background:rgba(16,185,129,0.1);border:2px solid #10b981}
 .portfolio-result.loss{background:rgba(239,68,68,0.1);border:2px solid #ef4444}
@@ -28,11 +29,11 @@ body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh
 </style>
 <div class="container">
 <div class="result-card">
-{{ if is_gain }}<div class="outcome-header gain"><div class="micron-badge">micron</div><div class="outcome-icon">📈</div><div class="outcome-text">Micron Technology Surged! {{ return_percent }}</div></div>
-{{ else }}<div class="outcome-header loss"><div class="micron-badge">micron</div><div class="outcome-icon">📉</div><div class="outcome-text">Micron Technology Declined {{ return_percent }}</div></div>{{ endif }}
+{{ if is_gain }}<div class="outcome-header gain"><div class="asset-tag">Asset B - Tech Stock</div><div class="outcome-icon">📈</div><div class="outcome-text">Market Went Up! {{ return_percent }}</div></div>
+{{ else }}<div class="outcome-header loss"><div class="asset-tag">Asset B - Tech Stock</div><div class="outcome-icon">📉</div><div class="outcome-text">Market Went Down {{ return_percent }}</div></div>{{ endif }}
 <div class="breakdown">
-<div class="breakdown-row"><span class="breakdown-label"><span class="mini-treasury">US</span> Treasury Bond: €{{ safe_amount }}</span><span>→ €{{ safe_return }}</span></div>
-<div class="breakdown-row"><span class="breakdown-label"><span class="mini-micron">MU</span> Micron: €{{ risky_amount }}</span><span>→ €{{ risky_return }}</span></div>
+<div class="breakdown-row"><span class="breakdown-label"><span class="mini-badge safe">A</span> Government Bond: €{{ safe_amount }}</span><span>→ €{{ safe_return }}</span></div>
+<div class="breakdown-row"><span class="breakdown-label"><span class="mini-badge risky">B</span> Tech Stock: €{{ risky_amount }}</span><span>→ €{{ risky_return }}</span></div>
 </div>
 <div class="portfolio-result {{ if is_gain }}gain{{ else }}loss{{ endif }}">
 <div class="portfolio-label">Your Portfolio</div>
