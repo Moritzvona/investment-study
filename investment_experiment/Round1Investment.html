@@ -13,13 +13,11 @@ body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh
 .asset-card{padding:20px;border-radius:15px;text-align:center}
 .asset-card.safe{background:linear-gradient(135deg,#e3f2fd,#bbdefb);border:2px solid #1565c0}
 .asset-card.risky{background:linear-gradient(135deg,#fff3e0,#ffe0b2);border:2px solid #ff9800}
-.logo-container{height:45px;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
-.treasury-shield{width:40px;height:40px;background:linear-gradient(135deg,#1a237e,#0d47a1);border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #c9a227}
-.treasury-shield-inner{color:#c9a227;font-size:16px;font-weight:bold}
-.micron-logo-box{background:#0057b8;padding:8px 16px;border-radius:6px}
-.micron-text{color:white;font-size:18px;font-weight:700;font-family:Arial,sans-serif;letter-spacing:1px}
+.asset-badge{display:inline-block;padding:5px 14px;border-radius:15px;font-weight:700;font-size:13px;margin-bottom:8px}
+.asset-badge.safe{background:#1565c0;color:white}
+.asset-badge.risky{background:#ff9800;color:white}
 .asset-name{font-weight:700;font-size:15px;color:#1a1a2e;margin-bottom:3px}
-.asset-ticker{font-size:11px;color:#888;margin-bottom:8px}
+.asset-type{font-size:11px;color:#888;margin-bottom:8px}
 .asset-return{font-size:13px;margin-bottom:3px}
 .asset-return .label{color:#666}
 .asset-return .value{font-weight:600}
@@ -52,33 +50,33 @@ body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh
 <div class="section-title">Available Assets</div>
 <div class="assets-grid">
 <div class="asset-card safe">
-<div class="logo-container"><div class="treasury-shield"><span class="treasury-shield-inner">US</span></div></div>
-<div class="asset-name">U.S. Treasury Bond</div>
-<div class="asset-ticker">Risk-Free Asset</div>
+<span class="asset-badge safe">Asset A</span>
+<div class="asset-name">Government Bond</div>
+<div class="asset-type">Risk-Free</div>
 <div class="asset-return"><span class="label">Expected: </span><span class="value blue">+3%</span></div>
 <div class="asset-return"><span class="label">Volatility: </span><span class="value">0%</span></div>
 </div>
 <div class="asset-card risky">
-<div class="logo-container"><div class="micron-logo-box"><span class="micron-text">micron</span></div></div>
-<div class="asset-name">Micron Technology</div>
-<div class="asset-ticker">NASDAQ: MU</div>
+<span class="asset-badge risky">Asset B</span>
+<div class="asset-name">Tech Stock</div>
+<div class="asset-type">Equity</div>
 <div class="asset-return"><span class="label">Expected: </span><span class="value orange">+7%</span></div>
 <div class="asset-return"><span class="label">Volatility: </span><span class="value orange">22%</span></div>
 </div>
 </div>
 <div class="slider-section">
-<div class="slider-label">How much do you want to invest in Micron Technology (MU)?</div>
+<div class="slider-label">How much do you want to invest in the Tech Stock (Asset B)?</div>
 <div class="slider-container">
 <input type="range" min="0" max="100" value="50" class="slider-input" id="riskSlider" oninput="updateAllocation(this.value)">
-<div class="slider-labels"><span>0% (All Treasury)</span><span>100% (All Micron)</span></div>
+<div class="slider-labels"><span>0% (All in Asset A)</span><span>100% (All in Asset B)</span></div>
 </div>
 <div class="allocation-display">
 <div class="allocation-box safe">
-<div class="label">U.S. Treasury Bond</div>
+<div class="label">Asset A (Government Bond)</div>
 <div class="value" id="safeAmount">€50</div>
 </div>
 <div class="allocation-box risky">
-<div class="label">Micron Technology</div>
+<div class="label">Asset B (Tech Stock)</div>
 <div class="value" id="riskyAmount">€50</div>
 </div>
 </div>
