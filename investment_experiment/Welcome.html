@@ -2,7 +2,7 @@
 {{ block content }}
 <style>
 body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;margin:0;padding:0}
-.container{max-width:800px;margin:0 auto;padding:20px}
+.container{max-width:850px;margin:0 auto;padding:20px}
 .welcome-card{background:white;border-radius:20px;padding:40px;box-shadow:0 20px 60px rgba(0,0,0,0.3);margin-top:20px}
 .welcome-title{font-size:32px;font-weight:700;text-align:center;color:#1a1a2e;margin-bottom:10px}
 .welcome-subtitle{text-align:center;color:#666;font-size:16px;margin-bottom:30px}
@@ -14,8 +14,11 @@ body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh
 .asset-card{padding:20px;border-radius:15px;text-align:center}
 .asset-card.safe{background:linear-gradient(135deg,#e3f2fd,#bbdefb);border:2px solid #1565c0}
 .asset-card.risky{background:linear-gradient(135deg,#fff3e0,#ffe0b2);border:2px solid #ff9800}
+.asset-badge{display:inline-block;padding:6px 16px;border-radius:20px;font-weight:700;font-size:14px;margin-bottom:10px}
+.asset-badge.safe{background:#1565c0;color:white}
+.asset-badge.risky{background:#ff9800;color:white}
 .asset-name{font-weight:700;font-size:16px;color:#1a1a2e;margin-bottom:5px}
-.asset-ticker{font-size:12px;color:#888;margin-bottom:10px}
+.asset-type{font-size:12px;color:#888;margin-bottom:10px}
 .asset-description{font-size:12px;color:#555;margin-bottom:12px;line-height:1.4;text-align:left}
 .asset-stats{background:rgba(255,255,255,0.7);border-radius:8px;padding:10px;margin-top:10px}
 .stat-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
@@ -24,19 +27,21 @@ body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh
 .stat-value{font-weight:600;color:#1a1a2e}
 .stat-value.blue{color:#1565c0}
 .stat-value.orange{color:#ef6c00}
+.chart-section{background:#f8f9fa;border-radius:15px;padding:20px;margin-bottom:25px}
+.chart-title{font-weight:600;color:#1a1a2e;margin-bottom:5px;font-size:16px;text-align:center}
+.chart-subtitle{font-size:12px;color:#888;text-align:center;margin-bottom:15px}
+.chart-container{background:white;border-radius:10px;padding:15px;border:1px solid #e0e0e0}
+.chart-svg{width:100%;height:200px}
+.chart-legend{display:flex;justify-content:center;gap:30px;margin-top:15px;font-size:12px}
+.legend-item{display:flex;align-items:center;gap:6px}
+.legend-dot{width:12px;height:12px;border-radius:50%}
+.legend-dot.safe{background:#1565c0}
+.legend-dot.risky{background:#ff9800}
 .task-box{background:linear-gradient(135deg,#667eea,#764ba2);border-radius:15px;padding:20px;margin-bottom:25px}
 .task-title{color:white;font-weight:600;margin-bottom:10px;font-size:16px}
 .task-text{color:rgba(255,255,255,0.9);font-size:14px;line-height:1.5}
-.btn-start{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;padding:18px 50px;font-size:18px;border-radius:30px;cursor:pointer;display:block;margin:0 auto;font-weight:600;box-shadow:0 10px 30px rgba(102,126,234,0.4);transition:transform 0.2s,box-shadow 0.2s;width:100%;max-width:300px}
-.btn-start:hover{transform:translateY(-2px);box-shadow:0 15px 40px rgba(102,126,234,0.5)}
 .disclaimer{text-align:center;font-size:11px;color:#888;margin-top:20px;line-height:1.4}
 .university-badge{display:inline-block;background:#f0f0f0;padding:8px 16px;border-radius:20px;font-size:12px;color:#666;margin-top:15px}
-.logo-container{height:60px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
-.treasury-logo{display:flex;flex-direction:column;align-items:center}
-.treasury-shield{width:45px;height:45px;background:linear-gradient(135deg,#1a237e,#0d47a1);border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #c9a227}
-.treasury-shield-inner{color:#c9a227;font-size:20px;font-weight:bold}
-.micron-logo-box{background:#0057b8;padding:10px 20px;border-radius:8px}
-.micron-text{color:white;font-size:22px;font-weight:700;font-family:Arial,sans-serif;letter-spacing:1px}
 @media(max-width:600px){.assets-grid{grid-template-columns:1fr;gap:15px}.welcome-card{padding:25px}.welcome-title{font-size:26px}}
 </style>
 <div class="container">
@@ -46,36 +51,115 @@ body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh
 
 <div class="scenario-box">
 <div class="scenario-title">Investment Scenario</div>
-<div class="scenario-text">Imagine you are a retail investor using a mobile trading app. You have <strong>€100</strong> available to invest over two rounds. Your goal is to allocate your portfolio between a safe government bond and a technology stock based on your risk preferences.</div>
+<div class="scenario-text">Imagine you are a retail investor using a mobile trading app. You have <strong>€100</strong> available to invest over two rounds. Your goal is to allocate your portfolio between two assets based on your risk preferences. The returns of these assets are based on real market data.</div>
 </div>
 
 <div class="assets-header">Available Assets</div>
 <div class="assets-grid">
 <div class="asset-card safe">
-<div class="logo-container">
-<div class="treasury-logo">
-<div class="treasury-shield"><span class="treasury-shield-inner">US</span></div>
-</div>
-</div>
-<div class="asset-name">U.S. Treasury Bond</div>
-<div class="asset-ticker">Risk-Free Government Security</div>
+<span class="asset-badge safe">Asset A</span>
+<div class="asset-name">Government Bond</div>
+<div class="asset-type">Risk-Free Security</div>
 <div class="asset-stats">
 <div class="stat-row"><span class="stat-label">Expected Return</span><span class="stat-value blue">+3%</span></div>
 <div class="stat-row"><span class="stat-label">Volatility</span><span class="stat-value">0%</span></div>
 </div>
-<div class="asset-description" style="margin-top:10px">Backed by the full faith and credit of the U.S. government. Considered the safest investment available with guaranteed returns.</div>
+<div class="asset-description" style="margin-top:10px">A safe government-backed bond with guaranteed returns and no risk of loss.</div>
 </div>
 <div class="asset-card risky">
-<div class="logo-container">
-<div class="micron-logo-box"><span class="micron-text">micron</span></div>
-</div>
-<div class="asset-name">Micron Technology</div>
-<div class="asset-ticker">NASDAQ: MU</div>
+<span class="asset-badge risky">Asset B</span>
+<div class="asset-name">Tech Stock</div>
+<div class="asset-type">Equity Security</div>
 <div class="asset-stats">
 <div class="stat-row"><span class="stat-label">Expected Return</span><span class="stat-value orange">+7%</span></div>
 <div class="stat-row"><span class="stat-label">Volatility</span><span class="stat-value orange">22%</span></div>
 </div>
-<div class="asset-description" style="margin-top:10px">Leading semiconductor company producing memory chips for AI data centers. Management expects strong growth from AI demand, but analysts warn of cyclical risks.</div>
+<div class="asset-description" style="margin-top:10px">A technology stock with higher potential returns but also higher risk based on market conditions.</div>
+</div>
+</div>
+
+<div class="chart-section">
+<div class="chart-title">Historical Performance (Past 12 Months)</div>
+<div class="chart-subtitle">Based on real market data</div>
+<div class="chart-container">
+<svg class="chart-svg" viewBox="0 0 700 200" preserveAspectRatio="xMidYMid meet">
+<!-- Grid lines -->
+<defs>
+<pattern id="grid" width="58.3" height="40" patternUnits="userSpaceOnUse">
+<path d="M 58.3 0 L 0 0 0 40" fill="none" stroke="#f0f0f0" stroke-width="1"/>
+</pattern>
+</defs>
+<rect width="700" height="200" fill="url(#grid)"/>
+
+<!-- Y-axis labels -->
+<text x="25" y="25" font-size="10" fill="#888">+30%</text>
+<text x="25" y="65" font-size="10" fill="#888">+15%</text>
+<text x="25" y="105" font-size="10" fill="#888">0%</text>
+<text x="25" y="145" font-size="10" fill="#888">-15%</text>
+<text x="25" y="185" font-size="10" fill="#888">-30%</text>
+
+<!-- X-axis labels -->
+<text x="50" y="198" font-size="9" fill="#888">Jan</text>
+<text x="108" y="198" font-size="9" fill="#888">Feb</text>
+<text x="166" y="198" font-size="9" fill="#888">Mar</text>
+<text x="224" y="198" font-size="9" fill="#888">Apr</text>
+<text x="282" y="198" font-size="9" fill="#888">May</text>
+<text x="340" y="198" font-size="9" fill="#888">Jun</text>
+<text x="398" y="198" font-size="9" fill="#888">Jul</text>
+<text x="456" y="198" font-size="9" fill="#888">Aug</text>
+<text x="514" y="198" font-size="9" fill="#888">Sep</text>
+<text x="572" y="198" font-size="9" fill="#888">Oct</text>
+<text x="630" y="198" font-size="9" fill="#888">Nov</text>
+<text x="680" y="198" font-size="9" fill="#888">Dec</text>
+
+<!-- Zero line -->
+<line x1="50" y1="100" x2="695" y2="100" stroke="#ccc" stroke-width="1" stroke-dasharray="4,4"/>
+
+<!-- Government Bond (Asset A) - steady growth, 3% over year -->
+<polyline 
+    points="50,100 108,99 166,97 224,96 282,95 340,94 398,93 456,92 514,91 572,90 630,89 688,88"
+    fill="none" 
+    stroke="#1565c0" 
+    stroke-width="3"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+
+<!-- Tech Stock (Asset B) - volatile path ending ~7% up -->
+<!-- Starting at 100 (0%), with realistic volatility pattern -->
+<polyline 
+    points="50,100 
+            80,95 
+            108,88 
+            136,102 
+            166,95 
+            194,82 
+            224,90 
+            252,110 
+            282,118 
+            310,105 
+            340,95 
+            370,88 
+            398,78 
+            426,85 
+            456,92 
+            484,80 
+            514,72 
+            542,85 
+            572,78 
+            600,70 
+            630,82 
+            660,75 
+            688,72"
+    fill="none" 
+    stroke="#ff9800" 
+    stroke-width="3"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+</svg>
+</div>
+<div class="chart-legend">
+<div class="legend-item"><span class="legend-dot safe"></span> Asset A (Government Bond)</div>
+<div class="legend-item"><span class="legend-dot risky"></span> Asset B (Tech Stock)</div>
 </div>
 </div>
 
