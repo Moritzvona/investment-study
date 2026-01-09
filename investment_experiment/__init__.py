@@ -1,4 +1,5 @@
 from otree.api import *
+import random
 
 doc = """
 Investment experiment examining how prior outcomes affect risk-taking behavior.
@@ -98,13 +99,10 @@ class Welcome(Page):
 class Round1Investment(Page):
     form_model = 'player'
     form_fields = ['risk1_share']
-
-class Round1Feedback(Page):
+    
     @staticmethod
     def before_next_page(player, timeout_happened):
-        import random
-        
-        # Randomly assign gain or loss
+        # Randomly assign gain or loss ONCE here
         player.r1_outcome_is_gain = random.choice([True, False])
         player.paper_gain = player.r1_outcome_is_gain
         
@@ -120,45 +118,28 @@ class Round1Feedback(Page):
             player.r1_risky_eur = round(risky_amount * (1 + C.RISKY_LOSS), 2)
         
         player.outcome_r1 = round(player.r1_safe_eur + player.r1_risky_eur, 2)
-        player.performance_r1 = round((player.outcome_r1 - C.INITIAL_ENDOWMENT) / C.INITIAL_ENDOWMENT, 4)
-    
+        player.performance_r1 = round((player.outcome_r1 - C.INITIAL_ENDOWMENT) / C.INITIAL_ENDOWMENT * 100, 2)
+
+class Round1Feedback(Page):
     @staticmethod
     def vars_for_template(player):
         safe_amount = C.INITIAL_ENDOWMENT * (100 - player.risk1_share) / 100
         risky_amount = C.INITIAL_ENDOWMENT * player.risk1_share / 100
         
-        # Pre-calculate for display (actual values set in before_next_page)
-        import random
-        is_gain = random.choice([True, False])
-        
-        safe_return = round(safe_amount * (1 + C.SAFE_RETURN), 2)
-        if is_gain:
-            risky_return = round(risky_amount * (1 + C.RISKY_GAIN), 2)
+        if player.r1_outcome_is_gain:
             return_percent = "+29%"
         else:
-            risky_return = round(risky_amount * (1 + C.RISKY_LOSS), 2)
             return_percent = "-15%"
-        
-        outcome = round(safe_return + risky_return, 2)
-        performance = round((outcome - C.INITIAL_ENDOWMENT) / C.INITIAL_ENDOWMENT * 100, 2)
-        
-        # Store for use
-        player.r1_outcome_is_gain = is_gain
-        player.paper_gain = is_gain
-        player.r1_safe_eur = safe_return
-        player.r1_risky_eur = risky_return
-        player.outcome_r1 = outcome
-        player.performance_r1 = round((outcome - C.INITIAL_ENDOWMENT) / C.INITIAL_ENDOWMENT, 4)
         
         return dict(
             safe_amount=int(safe_amount),
             risky_amount=int(risky_amount),
-            safe_return=safe_return,
-            risky_return=risky_return,
-            outcome=outcome,
-            is_gain=is_gain,
+            safe_return=player.r1_safe_eur,
+            risky_return=player.r1_risky_eur,
+            outcome=player.outcome_r1,
+            is_gain=player.r1_outcome_is_gain,
             return_percent=return_percent,
-            performance_percent=performance
+            performance_percent=player.performance_r1
         )
 
 class Beliefs(Page):
@@ -176,24 +157,20 @@ class Round2Investment(Page):
     @staticmethod
     def vars_for_template(player):
         current = player.outcome_r1
-        r1_perf = round(player.performance_r1 * 100, 2)
         return dict(
             current_portfolio=current,
             r1_gain=player.r1_outcome_is_gain,
-            r1_performance=r1_perf,
+            r1_performance=player.performance_r1,
             safe_default=round(current * 0.5, 2),
             risky_default=round(current * 0.5, 2)
         )
-
-class Round2Feedback(Page):
+    
     @staticmethod
     def before_next_page(player, timeout_happened):
-        import random
-        
         # Randomly assign gain or loss for round 2
         player.r2_outcome_is_gain = random.choice([True, False])
         
-        # Calculate Round 2 outcome based on Round 1 outcome
+        # Calculate Round 2 outcome
         current_portfolio = player.outcome_r1
         safe_amount = current_portfolio * (100 - player.risk2_share) / 100
         risky_amount = current_portfolio * player.risk2_share / 100
@@ -206,42 +183,21 @@ class Round2Feedback(Page):
             player.r2_risky_eur = round(risky_amount * (1 + C.RISKY_LOSS), 2)
         
         player.outcome_r2 = round(player.r2_safe_eur + player.r2_risky_eur, 2)
-        player.performance_r2 = round((player.outcome_r2 - current_portfolio) / current_portfolio, 4)
+        player.performance_r2 = round((player.outcome_r2 - current_portfolio) / current_portfolio * 100, 2)
         
         # Calculate delta risk
         player.delta_risk = player.risk2_share - player.risk1_share
-    
+
+class Round2Feedback(Page):
     @staticmethod
     def vars_for_template(player):
-        current_portfolio = player.outcome_r1
-        safe_amount = current_portfolio * (100 - player.risk2_share) / 100
-        risky_amount = current_portfolio * player.risk2_share / 100
-        
-        import random
-        is_gain = random.choice([True, False])
-        
-        safe_return = round(safe_amount * (1 + C.SAFE_RETURN), 2)
-        if is_gain:
-            risky_return = round(risky_amount * (1 + C.RISKY_GAIN), 2)
-        else:
-            risky_return = round(risky_amount * (1 + C.RISKY_LOSS), 2)
-        
-        outcome = round(safe_return + risky_return, 2)
-        total_return = round(outcome - C.INITIAL_ENDOWMENT, 2)
-        total_return_percent = round((outcome - C.INITIAL_ENDOWMENT) / C.INITIAL_ENDOWMENT * 100, 1)
-        
-        # Store values
-        player.r2_outcome_is_gain = is_gain
-        player.r2_safe_eur = safe_return
-        player.r2_risky_eur = risky_return
-        player.outcome_r2 = outcome
-        player.performance_r2 = round((outcome - current_portfolio) / current_portfolio, 4)
-        player.delta_risk = player.risk2_share - player.risk1_share
+        total_return = round(player.outcome_r2 - C.INITIAL_ENDOWMENT, 2)
+        total_return_percent = round((player.outcome_r2 - C.INITIAL_ENDOWMENT) / C.INITIAL_ENDOWMENT * 100, 1)
         
         return dict(
-            is_gain=is_gain,
+            is_gain=player.r2_outcome_is_gain,
             r1_outcome=player.outcome_r1,
-            outcome=outcome,
+            outcome=player.outcome_r2,
             total_return=total_return,
             total_return_percent=total_return_percent
         )
