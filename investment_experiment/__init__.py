@@ -9,7 +9,7 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
     INITIAL_ENDOWMENT = 100
-    SAFE_RETURN = 0.03  # 3% for government bonds
+    SAFE_RETURN = 0.03  # 3% for government bond
     RISKY_GAIN = 0.29   # +29% gain scenario
     RISKY_LOSS = -0.15  # -15% loss scenario
 
@@ -23,7 +23,7 @@ class Player(BasePlayer):
     # Round 1 investment
     risk1_share = models.IntegerField(
         min=0, max=100,
-        label="Percentage to invest in Micron Technology (MU)"
+        label="Percentage to invest in Tech Stock (Asset B)"
     )
     
     # Round 1 outcome (randomly assigned)
@@ -50,7 +50,7 @@ class Player(BasePlayer):
     # Round 2 investment
     risk2_share = models.IntegerField(
         min=0, max=100,
-        label="Percentage to invest in Micron Technology (MU)"
+        label="Percentage to invest in Tech Stock (Asset B)"
     )
     
     # Round 2 outcome
