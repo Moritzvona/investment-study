@@ -1,56 +1,66 @@
 {{ block title }}{{ endblock }}
 {{ block content }}
 <style>
-body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh}
-.container{max-width:700px;margin:0 auto;padding:20px}
-.page-title{text-align:center;color:white;font-size:28px;font-weight:700;margin-bottom:25px}
-.portfolio-status{background:white;border-radius:15px;padding:20px;text-align:center;margin-bottom:25px}
-.status-value{font-size:36px;font-weight:700}
-.status-value.gain{color:#10b981}
-.status-value.loss{color:#ef4444}
-.question-card{background:white;border-radius:15px;padding:25px;margin-bottom:20px}
-.question-number{display:inline-block;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;width:30px;height:30px;border-radius:50%;text-align:center;line-height:30px;font-weight:600;margin-bottom:15px}
-.question-title{font-size:18px;font-weight:600;color:#1a1a2e;margin-bottom:15px}
-input[type="number"]{width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:10px;font-size:16px;box-sizing:border-box}
-.radio-group{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.radio-option input[type="radio"]{display:none}
-.radio-option label{display:block;padding:12px 15px;background:#f5f5f5;border-radius:10px;cursor:pointer}
-.radio-option input[type="radio"]:checked+label{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white}
-.scale-labels{display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:#888}
-.submit-btn{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;padding:15px 50px;font-size:18px;border-radius:30px;cursor:pointer;display:block;margin:20px auto}
+body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;margin:0;padding:0}
+.container{max-width:800px;margin:0 auto;padding:20px}
+.beliefs-card{background:white;border-radius:20px;padding:40px;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.section-title{font-size:22px;font-weight:700;color:#1a1a2e;margin-bottom:10px;text-align:center}
+.section-subtitle{font-size:14px;color:#666;margin-bottom:30px;text-align:center}
+.question-block{background:#f8f9fa;border-radius:15px;padding:25px;margin-bottom:20px}
+.question-label{font-size:15px;font-weight:600;color:#1a1a2e;margin-bottom:15px;line-height:1.5}
+.micron-inline{display:inline-block;background:#0057b8;color:white;padding:2px 8px;border-radius:4px;font-weight:600;font-size:13px}
+.slider-container{margin-bottom:10px}
+.slider-input{width:100%;height:10px;border-radius:5px;background:linear-gradient(to right,#ef4444,#eab308,#22c55e);outline:none;-webkit-appearance:none;cursor:pointer}
+.slider-input::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:white;border:3px solid #667eea;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.slider-value{text-align:center;font-size:28px;font-weight:700;color:#667eea;margin:15px 0}
+.slider-labels{display:flex;justify-content:space-between;font-size:11px;color:#888}
+.input-euro{width:100%;padding:15px;font-size:18px;border:2px solid #e0e0e0;border-radius:10px;text-align:center;outline:none;transition:border-color 0.2s}
+.input-euro:focus{border-color:#667eea}
+.scale-container{display:flex;justify-content:space-between;gap:8px;margin-top:10px}
+.scale-btn{flex:1;padding:12px 5px;border:2px solid #e0e0e0;border-radius:8px;background:white;cursor:pointer;font-size:14px;font-weight:600;transition:all 0.2s}
+.scale-btn:hover{border-color:#667eea;background:#f0f4ff}
+.scale-btn.selected{border-color:#667eea;background:#667eea;color:white}
+.scale-labels{display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:#888}
+.btn-submit{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;padding:18px 50px;font-size:18px;border-radius:30px;cursor:pointer;display:block;margin:20px auto 0;font-weight:600;box-shadow:0 10px 30px rgba(102,126,234,0.4);width:100%;max-width:300px}
+.current-value{text-align:center;background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:15px;border-radius:10px;margin-bottom:25px;font-size:16px}
 </style>
 <div class="container">
-<h1 class="page-title">Your Investment Perspective</h1>
-<div class="portfolio-status">
-<div>Current Portfolio</div>
-<div class="status-value {{ if is_gain }}gain{{ else }}loss{{ endif }}">€{{ current_portfolio }}</div>
+<div class="beliefs-card">
+<div class="section-title">Your Thoughts</div>
+<div class="section-subtitle">Before making your next investment decision, please answer these questions</div>
+<div class="current-value">Your current portfolio value: <strong>€{{ current_portfolio }}</strong></div>
+<div class="question-block">
+<div class="question-label">1. What is the minimum price (in €) at which you would be willing to sell your entire portfolio right now?</div>
+<input type="number" name="wta_sell" class="input-euro" placeholder="Enter amount in €" min="0" max="200" step="0.01" required>
 </div>
-<form method="post">
-<div class="question-card">
-<div class="question-number">1</div>
-<div class="question-title">What is the minimum price you would accept to sell your portfolio?</div>
-<input type="number" name="wta_sell" step="0.01" min="0" max="500" required placeholder="€">
+<div class="question-block">
+<div class="question-label">2. What do you think is the probability that <span class="micron-inline">Micron (MU)</span> will have a POSITIVE return in the next round?</div>
+<div class="slider-container">
+<input type="range" min="0" max="100" value="50" class="slider-input" id="beliefSlider" oninput="updateBelief(this.value)">
+<div class="slider-value" id="beliefValue">50%</div>
+<div class="slider-labels"><span>0% (Certain loss)</span><span>100% (Certain gain)</span></div>
 </div>
-<div class="question-card">
-<div class="question-number">2</div>
-<div class="question-title">What do you think is the probability (%) that Tech Fund will go UP next round?</div>
-<input type="number" name="belief_stock_prob" min="0" max="100" required placeholder="0-100%">
+<input type="hidden" name="belief_stock_prob" id="belief_stock_prob" value="50">
 </div>
-<div class="question-card">
-<div class="question-number">3</div>
-<div class="question-title">Was your Round 1 result due to luck or skill?</div>
-<div class="radio-group">
-<div class="radio-option"><input type="radio" name="luck_vs_skill" id="l1" value="1" required><label for="l1">1</label></div>
-<div class="radio-option"><input type="radio" name="luck_vs_skill" id="l2" value="2"><label for="l2">2</label></div>
-<div class="radio-option"><input type="radio" name="luck_vs_skill" id="l3" value="3"><label for="l3">3</label></div>
-<div class="radio-option"><input type="radio" name="luck_vs_skill" id="l4" value="4"><label for="l4">4</label></div>
-<div class="radio-option"><input type="radio" name="luck_vs_skill" id="l5" value="5"><label for="l5">5</label></div>
-<div class="radio-option"><input type="radio" name="luck_vs_skill" id="l6" value="6"><label for="l6">6</label></div>
-<div class="radio-option"><input type="radio" name="luck_vs_skill" id="l7" value="7"><label for="l7">7</label></div>
+<div class="question-block">
+<div class="question-label">3. To what extent do you think your Round 1 outcome was due to luck versus your own skill/judgment?</div>
+<div class="scale-container">
+<button type="button" class="scale-btn" onclick="selectScale(1)">1</button>
+<button type="button" class="scale-btn" onclick="selectScale(2)">2</button>
+<button type="button" class="scale-btn" onclick="selectScale(3)">3</button>
+<button type="button" class="scale-btn" onclick="selectScale(4)">4</button>
+<button type="button" class="scale-btn" onclick="selectScale(5)">5</button>
+<button type="button" class="scale-btn" onclick="selectScale(6)">6</button>
+<button type="button" class="scale-btn" onclick="selectScale(7)">7</button>
 </div>
-<div class="scale-labels"><span>Entirely luck</span><span>Entirely skill</span></div>
+<div class="scale-labels"><span>Entirely Luck</span><span>Entirely Skill</span></div>
+<input type="hidden" name="luck_vs_skill" id="luck_vs_skill" value="" required>
 </div>
-<button type="submit" class="submit-btn">Continue →</button>
-</form>
+{{ next_button }}
 </div>
+</div>
+<script>
+function updateBelief(value){document.getElementById('beliefValue').textContent=value+'%';document.getElementById('belief_stock_prob').value=value;}
+function selectScale(value){document.querySelectorAll('.scale-btn').forEach(btn=>btn.classList.remove('selected'));event.target.classList.add('selected');document.getElementById('luck_vs_skill').value=value;}
+</script>
 {{ endblock }}
