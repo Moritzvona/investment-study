@@ -2,46 +2,92 @@
 {{ block content }}
 <style>
 body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;margin:0;padding:0}
-.container{max-width:800px;margin:0 auto;padding:15px;box-sizing:border-box}
-.hero-card{background:rgba(255,255,255,0.95);border-radius:20px;padding:30px 20px;box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center}
-.logo{font-size:40px;margin-bottom:10px}
-.platform-name{font-size:24px;font-weight:700;color:#1a1a2e;margin-bottom:5px}
-.tagline{color:#666;font-size:14px;margin-bottom:25px}
-.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:25px 0}
-@media(max-width:500px){.feature-grid{grid-template-columns:repeat(3,1fr);gap:5px}}
-.feature-item{text-align:center;padding:10px 5px}
-.feature-icon{font-size:28px;margin-bottom:8px}
-.feature-text{font-size:12px;color:#555}
-.feature-text strong{display:block;margin-bottom:2px}
-.btn-primary{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;padding:15px 40px;font-size:16px;border-radius:30px;cursor:pointer;width:100%;max-width:280px}
-.disclaimer{font-size:11px;color:#888;margin-top:25px;line-height:1.5}
-.university-badge{margin-top:15px;padding:10px 15px;background:#f8f9fa;border-radius:10px;display:inline-block;font-size:13px}
-p{margin:15px 0;line-height:1.5}
+.container{max-width:800px;margin:0 auto;padding:20px}
+.welcome-card{background:white;border-radius:20px;padding:40px;box-shadow:0 20px 60px rgba(0,0,0,0.3);margin-top:20px}
+.welcome-title{font-size:32px;font-weight:700;text-align:center;color:#1a1a2e;margin-bottom:10px}
+.welcome-subtitle{text-align:center;color:#666;font-size:16px;margin-bottom:30px}
+.scenario-box{background:#f8f9fa;border-radius:15px;padding:20px;margin-bottom:25px;border-left:4px solid #667eea}
+.scenario-title{font-weight:600;color:#1a1a2e;margin-bottom:10px;font-size:16px}
+.scenario-text{color:#555;line-height:1.6;font-size:14px}
+.assets-header{font-size:18px;font-weight:600;color:#1a1a2e;margin-bottom:15px;text-align:center}
+.assets-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:25px}
+.asset-card{padding:20px;border-radius:15px;text-align:center}
+.asset-card.safe{background:linear-gradient(135deg,#e3f2fd,#bbdefb);border:2px solid #1565c0}
+.asset-card.risky{background:linear-gradient(135deg,#fff3e0,#ffe0b2);border:2px solid #ff9800}
+.asset-name{font-weight:700;font-size:16px;color:#1a1a2e;margin-bottom:5px}
+.asset-ticker{font-size:12px;color:#888;margin-bottom:10px}
+.asset-description{font-size:12px;color:#555;margin-bottom:12px;line-height:1.4;text-align:left}
+.asset-stats{background:rgba(255,255,255,0.7);border-radius:8px;padding:10px;margin-top:10px}
+.stat-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
+.stat-row:last-child{margin-bottom:0}
+.stat-label{color:#666}
+.stat-value{font-weight:600;color:#1a1a2e}
+.stat-value.blue{color:#1565c0}
+.stat-value.orange{color:#ef6c00}
+.task-box{background:linear-gradient(135deg,#667eea,#764ba2);border-radius:15px;padding:20px;margin-bottom:25px}
+.task-title{color:white;font-weight:600;margin-bottom:10px;font-size:16px}
+.task-text{color:rgba(255,255,255,0.9);font-size:14px;line-height:1.5}
+.btn-start{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;padding:18px 50px;font-size:18px;border-radius:30px;cursor:pointer;display:block;margin:0 auto;font-weight:600;box-shadow:0 10px 30px rgba(102,126,234,0.4);transition:transform 0.2s,box-shadow 0.2s;width:100%;max-width:300px}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 15px 40px rgba(102,126,234,0.5)}
+.disclaimer{text-align:center;font-size:11px;color:#888;margin-top:20px;line-height:1.4}
+.university-badge{display:inline-block;background:#f0f0f0;padding:8px 16px;border-radius:20px;font-size:12px;color:#666;margin-top:15px}
+.logo-container{height:60px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.treasury-logo{display:flex;flex-direction:column;align-items:center}
+.treasury-shield{width:45px;height:45px;background:linear-gradient(135deg,#1a237e,#0d47a1);border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #c9a227}
+.treasury-shield-inner{color:#c9a227;font-size:20px;font-weight:bold}
+.micron-logo-box{background:#0057b8;padding:10px 20px;border-radius:8px}
+.micron-text{color:white;font-size:22px;font-weight:700;font-family:Arial,sans-serif;letter-spacing:1px}
+@media(max-width:600px){.assets-grid{grid-template-columns:1fr;gap:15px}.welcome-card{padding:25px}.welcome-title{font-size:26px}}
 </style>
 <div class="container">
-<div class="hero-card">
-<div class="logo">📈</div>
-<div class="platform-name">InvestSim</div>
-<div class="tagline">Virtual Investment Experience</div>
-<hr style="border:none;border-top:1px solid #eee;margin:20px 0">
-<p style="font-size:16px;color:#333">
-Welcome to our investment simulation!<br>
-You will receive <strong>€100 virtual capital</strong> to invest.
-</p>
-<div class="feature-grid">
-<div class="feature-item"><div class="feature-icon">🛡️</div><div class="feature-text"><strong>Safe</strong>Bonds</div></div>
-<div class="feature-item"><div class="feature-icon">🚀</div><div class="feature-text"><strong>Growth</strong>Tech Fund</div></div>
-<div class="feature-item"><div class="feature-icon">⏱️</div><div class="feature-text"><strong>Duration</strong>~5 min</div></div>
+<div class="welcome-card">
+<h1 class="welcome-title">Investment Simulation</h1>
+<p class="welcome-subtitle">Experience portfolio management in a dynamic market environment</p>
+
+<div class="scenario-box">
+<div class="scenario-title">Investment Scenario</div>
+<div class="scenario-text">Imagine you are a retail investor using a mobile trading app. You have <strong>€100</strong> available to invest over two rounds. Your goal is to allocate your portfolio between a safe government bond and a technology stock based on your risk preferences.</div>
 </div>
-<p style="color:#666;font-size:13px;margin-bottom:20px">
-Make investment decisions across 2 rounds and see how your portfolio performs.
-</p>
+
+<div class="assets-header">Available Assets</div>
+<div class="assets-grid">
+<div class="asset-card safe">
+<div class="logo-container">
+<div class="treasury-logo">
+<div class="treasury-shield"><span class="treasury-shield-inner">US</span></div>
+</div>
+</div>
+<div class="asset-name">U.S. Treasury Bond</div>
+<div class="asset-ticker">Risk-Free Government Security</div>
+<div class="asset-stats">
+<div class="stat-row"><span class="stat-label">Expected Return</span><span class="stat-value blue">+3%</span></div>
+<div class="stat-row"><span class="stat-label">Volatility</span><span class="stat-value">0%</span></div>
+</div>
+<div class="asset-description" style="margin-top:10px">Backed by the full faith and credit of the U.S. government. Considered the safest investment available with guaranteed returns.</div>
+</div>
+<div class="asset-card risky">
+<div class="logo-container">
+<div class="micron-logo-box"><span class="micron-text">micron</span></div>
+</div>
+<div class="asset-name">Micron Technology</div>
+<div class="asset-ticker">NASDAQ: MU</div>
+<div class="asset-stats">
+<div class="stat-row"><span class="stat-label">Expected Return</span><span class="stat-value orange">+7%</span></div>
+<div class="stat-row"><span class="stat-label">Volatility</span><span class="stat-value orange">22%</span></div>
+</div>
+<div class="asset-description" style="margin-top:10px">Leading semiconductor company producing memory chips for AI data centers. Management expects strong growth from AI demand, but analysts warn of cyclical risks.</div>
+</div>
+</div>
+
+<div class="task-box">
+<div class="task-title">Your Task</div>
+<div class="task-text">Decide how to allocate your €100 between these two assets. After Round 1, you will see how the market performed and your portfolio result. You will then have the opportunity to reallocate for Round 2.</div>
+</div>
+
 {{ next_button }}
-<div class="disclaimer">
-This is an academic research study. No real money is involved.<br>
-Your responses are anonymous and used for research only.
-</div>
-<div class="university-badge">🎓 Maastricht University</div>
+
+<p class="disclaimer">This is an academic research study. No real money is involved.<br>Your responses are anonymous and used for research only.</p>
+<div style="text-align:center"><span class="university-badge">Maastricht University</span></div>
 </div>
 </div>
 {{ endblock }}
