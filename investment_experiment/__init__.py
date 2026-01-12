@@ -68,7 +68,7 @@ class Player(BasePlayer):
     # Demographics
     age = models.IntegerField(min=18, max=100, label="Age")
     gender = models.StringField(
-        choices=['male', 'female', 'other', 'prefer not to say'],
+        choices=['male', 'female', 'diverse', 'no_answer'],
         label="Gender"
     )
     education = models.StringField(
@@ -84,7 +84,7 @@ class Player(BasePlayer):
         label="Risk attitude (1=very risk-averse, 10=very risk-seeking)"
     )
     investment_experience = models.StringField(
-        choices=['none', 'little', 'moderate', 'extensive'],
+        choices=['none', 'little', 'moderate', 'experienced'],
         label="Investment experience"
     )
     decision_reasoning = models.LongStringField(
